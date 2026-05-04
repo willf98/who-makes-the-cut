@@ -3,10 +3,15 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import { useEffect } from 'react';
+import { testConnection } from './lib/supabaseTest';
+
 
 function App() {
   const [count, setCount] = useState(0)
-
+  useEffect(() => {
+    testConnection();
+  }, []);
   return (
     <>
       <section id="center">
