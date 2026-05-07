@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+
+
 
 type GameRow = {
   id: string
@@ -23,7 +25,14 @@ export default function PlayerJoin() {
   const [errorMessage, setErrorMessage] = useState('')
   const [isCheckingRoom, setIsCheckingRoom] = useState(false)
   const [isJoiningGame, setIsJoiningGame] = useState(false)
+  const [searchParams] = useSearchParams()
 
+  useEffect(() => {
+    const codeFromUrl = searchParams.get('code')
+    if (codeFromUrl) {
+      setRoomCode(codeFromUrl.toUpperCase().slice(0, 4))
+    }
+  }, [searchParams])
   const normalizedRoomCode = roomCode.trim().toUpperCase()
   const trimmedPlayerName = playerName.trim()
 
